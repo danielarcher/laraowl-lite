@@ -15,6 +15,7 @@ It sends the same record format as the Laravel client, so LaraOwl's dashboards, 
 ## Install
 
 ```bash
+composer config repositories.laraowl-lite vcs https://github.com/danielarcher/laraowl-lite
 composer require danielarcher/laraowl-lite
 ```
 
