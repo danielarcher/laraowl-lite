@@ -1,0 +1,44 @@
+{
+    "name": "danielarcher/laraowl-lite",
+    "description": "A tiny, dependency-free LaraOwl client for plain PHP sites: requests, errors and warnings, sent after the page has been delivered.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["laraowl", "monitoring", "apm", "error-tracking", "observability", "php"],
+    "homepage": "https://github.com/danielarcher/laraowl-lite",
+    "authors": [
+        {
+            "name": "Daniel Archer",
+            "homepage": "https://github.com/danielarcher"
+        }
+    ],
+    "require": {
+        "php": ">=8.1"
+    },
+    "require-dev": {
+        "pestphp/pest": "^2.0 || ^3.0 || ^4.0"
+    },
+    "suggest": {
+        "ext-curl": "Sends batches with curl; without it, PHP's HTTP stream wrapper is used."
+    },
+    "autoload": {
+        "psr-4": {
+            "LaraOwlLite\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "pest"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
