@@ -136,6 +136,25 @@ final class Records
     }
 
     /**
+     * The signed-in user's profile, the shape the Laravel client sends.
+     *
+     * @param  array<string, mixed>  $context
+     */
+    public static function user(string $id, string $name, string $email, array $context): array
+    {
+        return [
+            'v' => 1,
+            't' => 'user',
+            'timestamp' => microtime(true),
+            'deploy' => $context['deploy'],
+            'server' => $context['server'],
+            'id' => self::text($id),
+            'name' => self::text($name),
+            'username' => self::text($email),
+        ];
+    }
+
+    /**
      * The full URL with secret-looking query values and route parameters
      * replaced, so ticket codes and tokens never leave the site.
      *

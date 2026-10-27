@@ -56,8 +56,8 @@ try {
 // A log message: debug, info, notice, warning, error, critical, alert, emergency.
 LaraOwlLite::log('error', 'Ticket email failed', ['booking' => $booking['id']]);
 
-// Who is signed in, if anyone.
-LaraOwlLite::user($adminId);
+// Who is signed in, if anyone; a name or email lists them by name in LaraOwl.
+LaraOwlLite::user($adminId, $adminName, $adminEmail);
 ```
 
 Without `route()`, requests are grouped by path, with ids, UUIDs, hashes and long tokens collapsed: `/event/12` and `/event/13` are both `/event/{id}`.

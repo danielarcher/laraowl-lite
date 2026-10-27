@@ -114,6 +114,23 @@ test('the signed-in user is attached to the request and its errors', function ()
     expect(array_column(LaraOwlLite::collect(serverFor('/admin')), 'user'))->toBe(['7', '7']);
 });
 
+test('a named user also sends a profile, the way the Laravel client does', function () {
+    bootLite();
+    LaraOwlLite::user(7, 'Ana Souza', 'ana@example.com');
+
+    $records = LaraOwlLite::collect(serverFor('/admin'));
+
+    expect(array_column($records, 't'))->toBe(['request', 'user'])
+        ->and($records[1])->toMatchArray(['id' => '7', 'name' => 'Ana Souza', 'username' => 'ana@example.com']);
+});
+
+test('a user without a name or email sends no profile', function () {
+    bootLite();
+    LaraOwlLite::user(7);
+
+    expect(array_column(LaraOwlLite::collect(serverFor('/admin')), 't'))->toBe(['request']);
+});
+
 test('the Forge release is the deploy marker', function () {
     bootLite(['basePath' => '/home/forge/site.com/releases/20261003224512']);
 

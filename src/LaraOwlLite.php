@@ -41,6 +41,9 @@ final class LaraOwlLite
 
     private static ?string $user = null;
 
+    /** @var array{name: string, email: string}|null */
+    private static ?array $userDetails = null;
+
     /** @var list<array<string, mixed>> */
     private static array $records = [];
 
@@ -117,11 +120,15 @@ final class LaraOwlLite
     }
 
     /**
-     * Who is signed in, if anyone: shown on the request and its errors.
+     * Who is signed in, if anyone: shown on the request and its errors. A name
+     * or email also sends a profile, so LaraOwl lists the user by name.
      */
-    public static function user(string|int|null $id): void
+    public static function user(string|int|null $id, ?string $name = null, ?string $email = null): void
     {
         self::$user = $id === null ? null : (string) $id;
+        self::$userDetails = $id !== null && ($name !== null || $email !== null)
+            ? ['name' => (string) $name, 'email' => (string) $email]
+            : null;
     }
 
     /**
@@ -267,6 +274,10 @@ final class LaraOwlLite
             ];
 
             array_unshift($records, Records::request($server, $context));
+
+            if (self::$user !== null && self::$userDetails !== null) {
+                $records[] = Records::user(self::$user, self::$userDetails['name'], self::$userDetails['email'], $context);
+            }
         }
 
         return $records;
@@ -296,6 +307,7 @@ final class LaraOwlLite
         self::$route = null;
         self::$routeParams = [];
         self::$user = null;
+        self::$userDetails = null;
         self::$records = [];
         self::$exceptions = 0;
         self::$logs = 0;
